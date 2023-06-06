@@ -52,3 +52,5 @@ end
 gem "graphql", "~> 1.12.10"
 
 gem "graphiql-rails", "1.7.0", group: :development
+
+gem "bcrypt", "~> 3.1.13"
