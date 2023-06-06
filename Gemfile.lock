@@ -80,10 +80,10 @@ GEM
     erubi (1.12.0)
     globalid (1.1.0)
       activesupport (>= 5.0)
-    graphiql-rails (1.7.0)
+    graphiql-rails (1.9.0)
       railties
       sprockets-rails
-    graphql (1.12.24)
+    graphql (2.0.22)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -117,7 +117,7 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.2-x64-mingw-ucrt)
       racc (~> 1.4)
-    puma (5.6.5)
+    puma (6.3.0)
       nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.7)
@@ -153,6 +153,10 @@ GEM
     rake (13.0.6)
     reline (0.3.5)
       io-console (~> 0.5)
+    search_object (1.2.5)
+    search_object_graphql (1.0.4)
+      graphql (> 1.8)
+      search_object (~> 1.2.2)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -184,11 +188,12 @@ DEPENDENCIES
   bcrypt (~> 3.1.13)
   bootsnap
   debug
-  graphiql-rails (= 1.7.0)
-  graphql (~> 1.12.10)
+  graphiql-rails (= 1.9.0)
+  graphql
   jbuilder
-  puma (~> 5.0)
+  puma (~> 6.3.0)
   rails (~> 7.0.5)
+  search_object_graphql
   sprockets-rails
   sqlite3 (~> 1.4)
   tzinfo-data
