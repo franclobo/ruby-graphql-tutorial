@@ -41,6 +41,7 @@ end
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem 'graphiql-rails', '1.9.0'
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
@@ -53,7 +54,6 @@ gem 'graphql'
 
 gem "bcrypt", "~> 3.1.13"
 
+gem 'search_object'
+
 gem 'search_object_graphql'
-
-gem 'graphiql-rails', '1.9.0', group: :development
-

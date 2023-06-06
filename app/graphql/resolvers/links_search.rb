@@ -1,26 +1,29 @@
-require 'search_object'
 require 'search_object/plugin/graphql'
+require 'graphql/query_resolver'
 
 class Resolvers::LinksSearch < GraphQL::Schema::Resolver
-  # include SearchObject for GraphQL
   include SearchObject.module(:graphql)
 
-  # scope is starting point for search
   scope { Link.all }
 
-  type types[Types::LinkType]
+  type [Types::LinkType]
 
-  # inline input type definition for the advanced filter
   class LinkFilter < ::Types::BaseInputObject
     argument :OR, [self], required: false
     argument :description_contains, String, required: false
     argument :url_contains, String, required: false
   end
 
-  # when "filter" is passed "apply_filter" would be called to narrow the scope
-  option :filter, type: LinkFilter, with: :apply_filter
+  class LinkOrderBy < ::Types::BaseEnum
+    value 'createdAt_ASC'
+    value 'createdAt_DESC'
+  end
 
-  # apply_filter recursively loops through "OR" branches
+  option :filter, type: LinkFilter, with: :apply_filter
+  option :first, type: types.Int, with: :apply_first
+  option :skip, type: types.Int, with: :apply_skip
+  option :orderBy, type: LinkOrderBy, default: 'createdAt_DESC'
+
   def apply_filter(scope, value)
     branches = normalize_filters(value).reduce { |a, b| a.or(b) }
     scope.merge branches
@@ -36,5 +39,30 @@ class Resolvers::LinksSearch < GraphQL::Schema::Resolver
     value[:OR].reduce(branches) { |s, v| normalize_filters(v, s) } if value[:OR].present?
 
     branches
+  end
+
+  def apply_first(scope, value)
+    scope.limit(value)
+  end
+
+  def apply_skip(scope, value)
+    scope.offset(value)
+  end
+
+  def apply_order_by_with_created_at_asc(scope)
+    scope.order('created_at ASC')
+  end
+
+  def apply_order_by_with_created_at_desc(scope)
+    scope.order('created_at DESC')
+  end
+
+  def fetch_results
+    # NOTE: Don't run QueryResolver during tests
+    return super unless context.present?
+
+    GraphQL::QueryResolver.run(Link, context, Types::LinkType) do
+      super
+    end
   end
 end

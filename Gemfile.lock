@@ -193,6 +193,7 @@ DEPENDENCIES
   jbuilder
   puma (~> 6.3.0)
   rails (~> 7.0.5)
+  search_object
   search_object_graphql
   sprockets-rails
   sqlite3 (~> 1.4)
